@@ -84,4 +84,92 @@ class StudentController extends Controller
         return redirect('admin/student/list')->with('success', 'Student Added Successfully');
 
     }
+
+    public function edit($id)
+    {
+        $data['getRecord'] = User::getSingle($id);
+        if (!empty($data['getRecord'])) {
+            $data['getClass'] = ClassModel::getClass();
+            $data['header_title'] ="Edit Student - ";
+            return view('admin.student.edit', $data);
+        }
+        else
+        {
+            return redirect('admin/student/list')->with('error', 'Student Not Found');
+        }
+        
+    }
+
+    public function update($id, Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email|unique:users,email,'.$id,
+            'blood_group' => 'max:10',
+            'height' => 'max:10',
+            'weight' => 'max:10',
+            ]);
+
+
+
+        $student = User::getSingle($id);
+        $student->name = $request->name;
+        $student->last_name = $request->last_name;
+        $student->admission_number = $request->admission_number;
+        $student->roll_number = $request->roll_number;
+        $student->class_id = $request->class_id;
+        $student->gender = $request->gender;
+        $student->date_of_birth = $request->date_of_birth;
+        $student->caste = $request->caste;
+        $student->religion = $request->religion;
+        $student->moblie_number = $request->moblie_number;
+        $student->admission_date = $request->admission_date;
+        if(!empty($request->file('profile_pic')))
+        {
+            if(!empty($student->getProfile()))
+            {
+                unlink('upload/profile/'.$student->profile_pic());
+            }
+            $ext = $request->file('profile_pic')->getClientOriginalExtension();
+            $file = $request->file('profile_pic');
+            $randomStr = date('Ymdhis').Str::random(20);
+            $filename = Strtolower($randomStr) . '.' . $ext;
+            $file->move('upload/profile/', $filename);
+            
+            $student->profile_pic = $filename;
+        
+        }
+        else
+        {
+            $student->profile_pic = '';
+        }
+        
+        $student->blood_group = $request->blood_group;
+        $student->height = $request->height;
+        $student->weight = $request->weight;
+        $student->status = $request->status;
+        $student->email = $request->email;
+        if(!empty($request->password))
+        {
+            $student->password = Hash::make($request->password);
+        }
+       
+      
+        
+        $student->save();
+        // Assuming you want to redirect to the student list page after updating a new student
+        return redirect('admin/student/list')->with('success', 'Student Added updated');
+    }
+
+    public function delete($id)
+    {
+        $student = User::getSingle($id);
+        if (!empty($student)) {
+            $student->is_delete = 1; // 1 means deleted
+            $student->save();
+            return redirect('admin/student/list')->with('success', 'Student Deleted Successfully');
+        } else {
+            return redirect('admin/student/list')->with('error', 'Student Not Found');
+        }
+    }
+
 }

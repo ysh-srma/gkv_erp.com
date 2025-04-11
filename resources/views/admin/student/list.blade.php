@@ -93,14 +93,14 @@
                                 <h3 class="card-title">Student List</h3>
                             </div>
                             <!-- /.card-header -->
-                            <div class="card-body p-0">
+                            <div class="card-body p-0" style="overflow: auto;">
                                 <table class="table table-striped">
                                     <thead>
                                         <tr>
                                             <th>#</th>
                                             <!-- <th>Profile pic</th> -->
-                                            <th>First Name</th>
-                                            <th>Last Name</th>
+                                            <th>Name</th>
+                                            
                                             <th>Email</th>
                                             <th>Admission Number</th>
                                             <th>Roll Number</th>
@@ -121,29 +121,33 @@
                                     </thead>
                                     <tbody>
                                         @foreach($getRecord as $value)
-                                            <tr>
+                                            <tr >
                                                 <td>{{ $value->id }}</td>
-                                                <!-- <td>{{ $value->profile_pic }}</td> -->
-                                                <td>{{ $value->name }}</td>
-                                                <td>{{ $value->last_name }}</td>
-                                                <td>{{ $value->email }}</td>
-                                                <td>{{ $value->admission_number }}</td>
-                                                <td>{{ $value->roll_number }}</td>
-                                                <td>{{ $value->class_id }}</td>
-                                                <td>{{ $value->gender }}</td>
-                                                <td>{{ $value->date_of_birth }}</td>
-                                                <td>{{ $value->caste }}</td>
-                                                <td>{{ $value->religion }}</td>
-                                                <td>{{ $value->moblie_number }}</td>
-                                                <td>{{ $value->admission_date }}</td>
-                                                <td>{{ $value->blood_group }}</td>
-                                                <td>{{ $value->height }}</td>
-                                                <td>{{ $value->weight }}</td>
-                                                <td>{{ $value->status }}</td>
-                                                <td>{{ date('d-m-Y h:i A', strtotime($value ->created_at))  }}</td>
-                                                <td>
-                                                    <a href="{{ url('admin/student/edit/'.$value->id) }}" class="btn btn-primary">Edit</a>
-                                                    <a href="{{ url('admin/student/delete/'.$value->id) }}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this item?');">Delete</a>
+                                                <!-- <td>
+                                                    @if(!empty($value->getProfile()))
+                                                        <img src="{{ $value->getProfile() }}"  style="width: 50px; height: 50px; border-radius: 50%;">
+                                                    @endif
+
+                                                </td> -->
+                                                <td style="min-width: 200px;">{{ $value->name }} {{ $value->last_name }}</td>
+                                                <td style="min-width: 200px;">{{ $value->email }}</td>
+                                                <td >{{ $value->admission_number }}</td>
+                                                <td >{{ $value->roll_number }}</td>
+                                                <td >{{ $value->class_name }}</td>
+                                                <td >{{ $value->gender }}</td>
+                                                <td  style="min-width: 100px;">{{ date('d-m-Y', strtotime($value ->date_of_birth))  }}</td>
+                                                <td >{{ $value->caste }}</td>
+                                                <td >{{ $value->religion }}</td>
+                                                <td  style="min-width: 100px;">{{ $value->moblie_number }}</td>
+                                                <td style="min-width: 100px;">{{ date('d-m-Y', strtotime($value ->admission_date))  }}</td>
+                                                <td >{{ $value->blood_group }}</td>
+                                                <td >{{ $value->height }}</td>
+                                                <td >{{ $value->weight }}</td>
+                                                <td >{{ ($value->status == 0) ? 'Active' : 'Inactive' }}</td>
+                                                <td style="min-width: 200px;">{{ date('d-m-Y h:i A', strtotime($value ->created_at))  }}</td>
+                                                <td style="min-width: 150px;">
+                                                    <a href="{{ url('admin/student/edit/'.$value->id) }}" class="btn btn-primary btn-sm">Edit</a>
+                                                    <a href="{{ url('admin/student/delete/'.$value->id) }}" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this item?');">Delete</a>
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -151,14 +155,7 @@
                                 </table>
                             
                             
-                                    <div class="row mb-2">
-                                        <div class="col-md-6" style="text-align:left;"> 
-                                        <strong>Showing {{ $getRecord->firstItem() }} to {{ $getRecord->lastItem() }}</strong>
-                                        </div>
-                                        <div class="col-md-5" style="text-align:right;">
-                                        <strong>Page {{ $getRecord->currentPage() }} of {{ $getRecord->lastPage() }}</strong>
-                                        </div>
-                                    </div>
+                                    
                                     <div style="padding: 10px; float:right;">
                                         {!! $getRecord->appends(Illuminate\Support\Facades\Request::except('page'))->links() !!}
                                     </div>

@@ -122,14 +122,14 @@
                     </table>
                    
                    
-                      <div class="row mb-2">
+                      <!-- <div class="row mb-2">
                         <div class="col-md-6" style="text-align:left;"> 
                           <strong>Showing {{ $getRecord->firstItem() }} to {{ $getRecord->lastItem() }}</strong>
                         </div>
                         <div class="col-md-5" style="text-align:right;">
                           <strong>Page {{ $getRecord->currentPage() }} of {{ $getRecord->lastPage() }}</strong>
                         </div>
-                      </div>
+                      </div> -->
                        <div style="padding: 10px; float:right;">
                     {!! $getRecord->appends(Illuminate\Support\Facades\Request::except('page'))->links() !!}
 
