@@ -5,6 +5,7 @@ use Hash;
 use Auth;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class AdminController extends Controller
 {
@@ -17,7 +18,7 @@ class AdminController extends Controller
 
     public function add()
     {
-       
+        
         $data['header_title'] ="Add New Admin   - ";
         return view('admin.admin.add', $data);
     }

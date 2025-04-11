@@ -54,10 +54,10 @@ class User extends Authenticatable
                 ->where('user_type', '=', $user_type)
                 ->where('is_delete', '=', 0)
                 ->count();
-        
-        
-    
     }
+    
+
+    
 
     static function getAdmin()
     {

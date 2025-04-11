@@ -9,7 +9,7 @@
           <div class="container-fluid">
             <!--begin::Row-->
             <div class="row mb-2">
-              <div class="col-sm-6"><h3 class="mb-0"> Admin List (Total : {{ $getRecord->total() }} Entries)</h3></div>
+              <div class="col-sm-6"><h3 class="mb-0"> Admin List</h3></div>
               <div class="col-sm-6" style="text-align :right;">
                 <a href="{{ url('admin/admin/add') }}" class="btn btn-primary">Add New Admin</a>
                 </div>
@@ -105,35 +105,25 @@
                         </tr>
                       </thead>
                       <tbody>
-                        @foreach($getRecord as $value)
+                      @foreach($getRecord as $value)
                         <tr>
-                          <td>{{ $value->id }}</td>
-                          <td>{{ $value->name }}</td>
-                          <td>{{ $value->email }}</td>
-                          <td>{{ date('d-m-Y h:i A', strtotime($value ->created_at))  }}</td>
-                          <td>
-                            <a href="{{ url('admin/admin/edit/'.$value->id) }}" class="btn btn-primary">Edit</a>
-                            <a href="{{ url('admin/admin/delete/'.$value->id) }}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this item?');">Delete</a>
-                          </td>
+                            <td>{{ $value->id }}</td>
+                            <td style="min-width: 200px;">{{ $value->name }}</td>
+                            <td style="min-width: 200px;">{{ $value->email }}</td>
+                            <td style="min-width: 200px;">{{ date('d-m-Y h:i A', strtotime($value ->created_at))  }}</td>
+                            <td style="min-width: 150px;">
+                              <a href="{{ url('admin/student/edit/'.$value->id) }}" class="btn btn-primary btn-sm">Edit</a>
+                              <a href="{{ url('admin/student/delete/'.$value->id) }}" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this item?');">Delete</a>
+                            </td>
                         </tr>
-                        @endforeach
+                      @endforeach
+                        
                        
                       </tbody>
                     </table>
                    
                    
-                      <!-- <div class="row mb-2">
-                        <div class="col-md-6" style="text-align:left;"> 
-                          <strong>Showing {{ $getRecord->firstItem() }} to {{ $getRecord->lastItem() }}</strong>
-                        </div>
-                        <div class="col-md-5" style="text-align:right;">
-                          <strong>Page {{ $getRecord->currentPage() }} of {{ $getRecord->lastPage() }}</strong>
-                        </div>
-                      </div> -->
-                       <div style="padding: 10px; float:right;">
-                    {!! $getRecord->appends(Illuminate\Support\Facades\Request::except('page'))->links() !!}
-
-                    </div>
+                      
 
 
 
