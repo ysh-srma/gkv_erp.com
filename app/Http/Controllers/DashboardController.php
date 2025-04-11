@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
+use App\Models\ClassModel;
 use Auth;
 
 class DashboardController extends Controller
@@ -12,6 +14,10 @@ class DashboardController extends Controller
         $data['header_title'] = "Dashboard - ";
         if(Auth::user()->user_type == 1)
                 {
+                    $data['TotalAdmin'] = User::getTotalUser(1);
+                    $data['TotalTeacher'] = User::getTotalUser(2);
+                    $data['TotalStudent'] = User::getTotalUser(3);
+                    $data['TotalParents'] = User::getTotalUser(4);
                     return view('admin.dashboard',$data);
                 }
                 else if(Auth::user()->user_type == 2)

@@ -48,6 +48,17 @@ class User extends Authenticatable
         return self::find($id);
     }
 
+    static public function getTotalUser($user_type)
+    {
+        return  self::select('users.id')
+                ->where('user_type', '=', $user_type)
+                ->where('is_delete', '=', 0)
+                ->count();
+        
+        
+    
+    }
+
     static function getAdmin()
     {
         $return = self::select('users.*')
@@ -65,9 +76,9 @@ class User extends Authenticatable
                         {
                             $return = $return->whereDate('created_at', '=', Request::get('date'));
                         }
-        $return = $return->orderby('id','desc')
-                        ->paginate(5);
-        return $return;
+                        $return = self::select('users.*')
+                        ->where('user_type', '=', 1)
+                        ->where('is_delete', '=', 0);
     }
 
     static public function getStudent()
