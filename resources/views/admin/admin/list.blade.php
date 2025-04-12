@@ -105,7 +105,7 @@
                         </tr>
                       </thead>
                       <tbody>
-                      @foreach($getRecord as $value)
+                      @foreach($getRecord ?? [] as $value)
                         <tr>
                             <td>{{ $value->id }}</td>
                             <td style="min-width: 200px;">{{ $value->name }}</td>
@@ -123,7 +123,6 @@
                     </table>
                    
                    
-                      
 
 
 
